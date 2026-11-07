@@ -15,6 +15,12 @@ In apparel e-commerce, **inventory isolation across size and color variants is c
 3. **Inventory Misallocation**: A warehouse bin scan anomaly mistakenly reserves **Size L** (`BG-KRT-BLK-L`) instead of **Size M** (`BG-KRT-BLK-M`).
 4. **Order Stalled**: The fulfillment workflow halts at `STALLED_INCONSISTENT` — customer is charged, but packing is blocked.
 
+### Switch AI & Multi-Agent Intelligence
+
+BizGuard AI uses **Switch AI** to power intelligent workflows through multiple specialised AI agents. Each agent handles a dedicated business task, collaborating to analyse problems, generate insights, and support smarter decisions.
+
+**What makes it unique?** Instead of relying on a single AI assistant, BizGuard AI brings multiple agents together in one unified platform, combining automation, business intelligence, and a distinctive, interactive UI/UX to deliver a more intelligent business management experience.
+
 ### The BizGuard AI 12-Step Autonomous Recovery Solution:
 1. **Detection**: `InvariantDetector` flags `RULE_VARIANT_INVENTORY_MISMATCH`.
 2. **Incident Creation**: Creates incident `INC-2026-XXXX` with forensic blast-radius analysis.
