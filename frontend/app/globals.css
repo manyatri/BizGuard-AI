@@ -1,0 +1,97 @@
+@import "tailwindcss";
+
+:root {
+  /* Requested Luxury Fashion Pastel Palette */
+  --blush-pink: #f8e5e9;
+  --powder-blue: #e4eff8;
+  --sage-green: #e8efe5;
+  --champagne-gold: #e9d8b5;
+  --soft-silver: #e7e8eb;
+  --warm-ivory: #f8f5ef;
+  --pearl-white: #fcfbf8;
+  --muted-rose: #d9a9b5;
+  --soft-charcoal: #383638;
+
+  --background: var(--warm-ivory);
+  --foreground: var(--soft-charcoal);
+  --gold: #c5a55a;
+  --gold-accent: var(--champagne-gold);
+}
+
+body {
+  background: var(--warm-ivory);
+  color: var(--soft-charcoal);
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Animations */
+@keyframes slideLeft {
+  from {
+    transform: translateX(100%);
+    opacity: 0.8;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+@keyframes slideUp {
+  from {
+    transform: translateY(24px) scale(0.96);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0) scale(1);
+    opacity: 1;
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes heartPop {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.3); }
+  100% { transform: scale(1); }
+}
+
+.animate-heart-pop {
+  animation: heartPop 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+/* Custom luxury scrollbars */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: #f8f5ef;
+}
+::-webkit-scrollbar-thumb {
+  background: #e7e8eb;
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #d9a9b5;
+}
+
+/* Accessibility: respect reduced-motion */
+@media (prefers-reduced-motion: reduce) {
+  *, ::before, ::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
