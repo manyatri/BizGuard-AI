@@ -1,0 +1,57 @@
+version: '3.8'
+
+services:
+  db:
+    image: postgres:16-alpine
+    container_name: bizguard-postgres
+    restart: always
+    environment:
+      POSTGRES_USER: bizguard_user
+      POSTGRES_PASSWORD: bizguard_password
+      POSTGRES_DB: bizguard_db
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U bizguard_user -d bizguard_db"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: bizguard-backend
+    restart: always
+    depends_on:
+      db:
+        condition: service_healthy
+    environment:
+      DATABASE_URL: postgresql://bizguard_user:bizguard_password@db:5432/bizguard_db
+      PROJECT_NAME: "BizGuard AI"
+      SWITCH_BUS_URL: "ws://host.docker.internal:8765/switch-bus"
+      DEFAULT_LLM_PROVIDER: "anthropic"
+      ANTHROPIC_API_KEY: "${ANTHROPIC_API_KEY:-}"
+      OPENAI_API_KEY: "${OPENAI_API_KEY:-}"
+    ports:
+      - "8000:8000"
+    command: >
+      sh -c "python ../scripts/seed_expanded_clothing_data.py && uvicorn app.main:app --host 0.0.0.0 --port 8000 --reload"
+
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    container_name: bizguard-frontend
+    restart: always
+    depends_on:
+      - backend
+    environment:
+      NEXT_PUBLIC_API_URL: "http://localhost:8000"
+    ports:
+      - "3000:3000"
+
+volumes:
+  postgres_data:
